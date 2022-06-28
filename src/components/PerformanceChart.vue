@@ -1,6 +1,6 @@
 <template>
   <div class="container-chart">
-    <canvas id="planet-chart"></canvas>
+    <canvas id="performance-chart"></canvas>
     <!-- {{user.id}} -->
   </div>
 </template>
@@ -10,12 +10,12 @@ import Chart from "chart.js";
 import { mapState } from "vuex";
 
 export default {
-  name: "PlanetChart",
+  name: "PerformanceChart",
   data() {
     return {
       labels:[],
       score:[],
-      planetChartData: {
+      performanceChartData: {
         type: "line",
         data: {
           labels: [],
@@ -55,17 +55,17 @@ export default {
         this.score.push(element.score)
       });
 
-      this.planetChartData.data.labels = this.labels
-      this.planetChartData.data.datasets[0].data = this.score
+      this.performanceChartData.data.labels = this.labels
+      this.performanceChartData.data.datasets[0].data = this.score
 
-      const ctx = document.getElementById("planet-chart");
-      new Chart(ctx, this.planetChartData);
+      const ctx = document.getElementById("performance-chart");
+      new Chart(ctx, this.performanceChartData);
     },
 };
 </script>
 
 <style>
 .container-chart {
-  width: 800px;
+  width: 70%;
 }
 </style>

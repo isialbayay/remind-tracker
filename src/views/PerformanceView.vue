@@ -1,16 +1,16 @@
 <template>
   <div class="main-container">
     <h2>Performance Page</h2>
-    <PlanetChart></PlanetChart>
+    <PerformanceChart></PerformanceChart>
   </div>
 </template>
 
 <script>
-import PlanetChart from '@/components/PlanetChart.vue'
+import PerformanceChart from '@/components/PerformanceChart.vue'
 
 export default {
   components: {
-    PlanetChart
+    PerformanceChart
   }
 }
 </script>
