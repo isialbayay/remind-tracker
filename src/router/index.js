@@ -7,8 +7,8 @@ import LandingView from "@/views/LandingView.vue";
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
+    path: '/sessions',
+    name: 'sessions',
     component: HomeView
   },
   {
@@ -27,7 +27,7 @@ const routes = [
     component: PerformanceView,
   },
   {
-    path: "/landing",
+    path: "/",
     name: "landing",
     component: LandingView,
   },

@@ -13,6 +13,9 @@
               <router-link class="nav-link" to="/">Home</router-link>
           </li>
           <li class="nav-item">
+              <router-link class="nav-link" to="/sessions">Sessions</router-link>
+          </li>
+          <li class="nav-item">
               <router-link class="nav-link" to="/performance">Performance</router-link>
           </li>
         </div>
