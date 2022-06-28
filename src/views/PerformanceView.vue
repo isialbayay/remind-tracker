@@ -1,5 +1,7 @@
 <template>
-  <h2>Performance View</h2>
+  <div class="main-container">
+    <h2>Performance Page</h2>
+  </div>
 </template>
 
 <script>

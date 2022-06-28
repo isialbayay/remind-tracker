@@ -1,5 +1,7 @@
 <template>
-  <h2>Register Page</h2>
+  <div class="main-container">
+    <h2>Register Page</h2>
+  </div>
 </template>
 
 <script>
