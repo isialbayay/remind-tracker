@@ -1,5 +1,5 @@
 <template>
-  <h2>Home Page</h2>
+  <h2>Register Page</h2>
 </template>
 
 <script>
