@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="container-lg">
   <NavBar></NavBar>
   <router-view/>
 </div>
