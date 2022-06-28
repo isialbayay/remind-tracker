@@ -19,8 +19,7 @@
         <!-- Wea -->
         <div>
           <li class="nav-item dropdown d-flex">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Username
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{user.username}}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="#">Log out</a></li>
@@ -34,7 +33,13 @@
 </template>
 
 <script>
-export default {};
+import {mapState} from 'vuex';
+
+export default {
+  computed:{
+        ...mapState(['user'])
+    },
+};
 </script>
 
 <style></style>
