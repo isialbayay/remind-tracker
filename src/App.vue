@@ -18,7 +18,7 @@ export default{
 <style>
 .main-container{
   background-color: rgb(233, 233, 233);
-  height: 100vh;
+  min-height: calc(100vh - 56px);
   padding: 12px;
   display: flex;
   flex-direction: column;

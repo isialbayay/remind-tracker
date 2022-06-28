@@ -3,6 +3,7 @@ import HomeView from "@/views/HomeView.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import PerformanceView from "@/views/PerformanceView.vue";
+import LandingView from "@/views/LandingView.vue";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/performance",
     name: "performance",
     component: PerformanceView,
+  },
+  {
+    path: "/landing",
+    name: "landing",
+    component: LandingView,
   },
 ];
 

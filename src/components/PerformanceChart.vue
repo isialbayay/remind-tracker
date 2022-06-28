@@ -13,8 +13,6 @@ export default {
   name: "PerformanceChart",
   data() {
     return {
-      labels:[],
-      score:[],
       performanceChartData: {
         type: "line",
         data: {
@@ -50,13 +48,8 @@ export default {
     ...mapState(['user'])
   },
     mounted() {
-      this.user.sessions.forEach(element => {
-        this.labels.push("Session #"+element.id)
-        this.score.push(element.score)
-      });
-
-      this.performanceChartData.data.labels = this.labels
-      this.performanceChartData.data.datasets[0].data = this.score
+      this.performanceChartData.data.labels = this.user.sessions.map(({ id }) => "Session #"+id);
+      this.performanceChartData.data.datasets[0].data = this.user.sessions.map(({ score }) => score);
 
       const ctx = document.getElementById("performance-chart");
       new Chart(ctx, this.performanceChartData);
