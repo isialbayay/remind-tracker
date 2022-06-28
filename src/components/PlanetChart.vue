@@ -1,7 +1,7 @@
 <template>
   <div class="container-chart">
     <canvas id="planet-chart"></canvas>
-    {{user.id}}
+    <!-- {{user.id}} -->
   </div>
 </template>
 
