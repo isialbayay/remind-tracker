@@ -23,7 +23,7 @@
       </div>
       
       <div class="container d-grid gap-2 col-4  mt-5">
-        <button class="btn btn-primary" type="button">Login</button>
+        <button class="btn btn-primary btnespecial" type="button">Login</button>
       </div>
     </div>
   </div>
@@ -37,5 +37,10 @@ export default {};
 .container{
   font-size: 25px;
   min-width: 300px;
+}
+.form-control{
+  font-size: 20px;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+  border-radius: 0px 16px 0px 16px;
 }
 </style>
