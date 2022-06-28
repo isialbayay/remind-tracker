@@ -27,7 +27,7 @@ export default createStore({
         {
           id: 4,
           date: "05/11/2021",
-          score: 6.2,
+          score: 4.2,
           duration: 72,
         },
         {
@@ -39,22 +39,14 @@ export default createStore({
         {
           id: 6,
           date: "07/11/2021",
-          score: 7,
+          score: 2.1,
           duration: 55,
         },
       ],
     },
-    ids:this.arrayIds()
   },
   getters: {},
   mutations: {
-    arrayIds(){
-      let idArray=[];
-      for (let index = 0; index < this.user.sessions; index++) {
-        idArray.push(this.user.sessions[index]);        
-      }
-      return idArray;
-    }
   },
   actions: {},
   modules: {},
