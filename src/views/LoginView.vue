@@ -10,7 +10,7 @@
 
       <div class="container col-4 mt-5">
         <label class="form-label">Password</label>
-        <input type="text" class="form-control" id="password" placeholder="Password...">
+        <input type="password" class="form-control" id="password" placeholder="Password...">
       </div>
 
       <div class="container col-4 mt-3">
