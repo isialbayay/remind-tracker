@@ -43,10 +43,19 @@ export default createStore({
           duration: 55,
         },
       ],
-    }
+    },
+    ids:this.arrayIds()
   },
   getters: {},
-  mutations: {},
+  mutations: {
+    arrayIds(){
+      let idArray=[];
+      for (let index = 0; index < this.user.sessions; index++) {
+        idArray.push(this.user.sessions[index]);        
+      }
+      return idArray;
+    }
+  },
   actions: {},
   modules: {},
 });
