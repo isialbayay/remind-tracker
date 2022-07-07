@@ -21,8 +21,8 @@ export default {
             {
               label: "Your performance",
               data: [],
-              backgroundColor: "#eec19cbe",
-              borderColor: "#eea76e",
+              backgroundColor: "#9cbfeebe",
+              borderColor: "#629ae4",
               borderWidth: 3,
             },
           ],

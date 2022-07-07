@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">RemindTracker</a>
+    <a class="navbar-brand" href="/">RemindTracker</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -45,4 +45,30 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.navbar{
+  background: linear-gradient(to top, #560bad, #430988);
+}
+
+.nav-item a{
+  color: white;
+  font-weight: 400;
+}
+
+.dropdown-item{
+  color: black !important;
+}
+
+.nav-item a:hover{
+  color: #0089d9;
+}
+
+.navbar-brand{
+  color: white;
+}
+.navbar-brand:hover{
+  color: white;
+}
+
+
+</style>

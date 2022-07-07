@@ -15,7 +15,7 @@
               <p> {{session.score}} / 5</p>
             </div>
             <div class="duration d-flex"> 
-              <img src="https://cdn-icons.flaticon.com/png/512/2838/premium/2838590.png?token=exp=1656386238~hmac=09a4a642f03b171425971f86aed876d5" width="24" height="24" alt="">
+              <img src="@/assets/clock.png" width="24" height="24" alt="">
               <p>{{session.duration}} min</p>
             </div>
           </div>
@@ -123,11 +123,13 @@ export default {
   left: 0;
   border-radius: 12px !important;
   /* background: #9cbfee; */
-  background: linear-gradient(to bottom, #9cbfee, #629ae4);
+  /* background: linear-gradient(to bottom, #008ed4, #1e8dc5d3); */
+  background: linear-gradient(to bottom,#9cbfee, #629ae4);
+
 }
 
 .orange{
-  background: linear-gradient(to bottom, #eec19c, #eea76e);
+  background: linear-gradient(to top, #560bad, #570badcc);
 
 }
 

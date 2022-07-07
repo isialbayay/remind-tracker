@@ -1,8 +1,6 @@
 <template>
-<div class="container-lg">
   <NavBar></NavBar>
   <router-view/>
-</div>
 </template>
 
 <script>
@@ -17,7 +15,7 @@ export default{
 
 <style>
 .main-container{
-  background-color: rgb(233, 233, 233);
+  background-color: #d6dada;
   min-height: calc(100vh - 56px);
   padding: 12px;
   display: flex;

@@ -1,5 +1,6 @@
 <template>
-  <div class="main-container d-flex flex-row justify-content-around flex-wrap">
+<div class="main-container">
+    <div class="d-flex flex-row justify-content-around flex-wrap mt-5 align-items-center">
     <div class="info">
         <h1>Keep track of your study sessions</h1>
         <p>Join us to discover the opportunities that RemindTracker has for you</p>
@@ -10,6 +11,7 @@
     </div>
     <div>
         <img class="landing-img" src="@/assets/juicy-girl-working-at-home.gif">
+    </div>
     </div>
   </div>
 </template>
