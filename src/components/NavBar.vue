@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">RemindTracker</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,7 +7,7 @@
     </button>
     <div class="collapse navbar-collapse " id="navbarSupportedContent">
       <ul class="navbar-nav d-flex justify-content-between w-100">
-        <div class="d-flex">
+        <div class="d-flex navbar-nav">
 
           <li class="nav-item">
               <router-link class="nav-link" to="/">Home</router-link>
@@ -70,5 +70,12 @@ export default {
   color: white;
 }
 
+.navbar-toggler-icon {
+  background-image: url("@/assets/menu.png");
+}
+
+.navbar-toggler {
+  border-color: white;
+} 
 
 </style>

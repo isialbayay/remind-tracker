@@ -6,7 +6,7 @@
         <p>Join us to discover the opportunities that RemindTracker has for you</p>
         <div class="buttons flex-wrap">
             <router-link class="button" to="/login">Log in</router-link>
-            <router-link class="button" to="/register">Register</router-link>
+            <router-link class="button" to="/login">Register</router-link>
         </div>
     </div>
     <div>
@@ -59,6 +59,9 @@ align-content: center;
  color: var(--color);
 }
 
+.button{
+  margin-top:8px;
+}
 .button:before {
  content: "";
  position: absolute;
