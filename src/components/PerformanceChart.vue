@@ -60,5 +60,6 @@ export default {
 <style>
 .container-chart {
   width: 70%;
+  min-width: 300px;
 }
 </style>
