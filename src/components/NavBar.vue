@@ -8,10 +8,6 @@
     <div class="collapse navbar-collapse " id="navbarSupportedContent">
       <ul class="navbar-nav d-flex justify-content-between w-100">
         <div class="d-flex navbar-nav">
-
-          <li class="nav-item">
-              <router-link class="nav-link" to="/">Home</router-link>
-          </li>
           <li class="nav-item">
               <router-link class="nav-link" to="/sessions">Sessions</router-link>
           </li>
