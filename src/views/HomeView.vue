@@ -27,8 +27,23 @@
 
 <script>
 import { mapState } from "vuex";
+//import axios from 'axios';
+
 export default {
+  async mounted(){
+     
+
+
+  },
   methods:{
+    
+    
+    //getUserData(){
+    //  await axios.get("https://7qak3a37b4dh7kisebhllubdxq0dnehm.lambda-url.us-east-1.on.aws/")
+    //    .then((response) => {
+
+    //    })
+    //}
 
   },
   computed: {

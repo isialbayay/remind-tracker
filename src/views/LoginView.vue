@@ -1,149 +1,192 @@
 <template>
-  <div class="main-container">
-    <div class="container mt-5" id="container">
-      <div class="form-container sign-up-container ">
-        <form action="#">
-          <h1>Create Account</h1>
-          <span>or use your email for registration</span>
-          <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button>Sign Up</button>
-        </form>
-      </div>
-      <div class="form-container sign-in-container">
-        <form action="#">
-          <h1>Sign in</h1>
-          <span>or use your account</span>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button>Sign In</button>
-        </form>
-      </div>
-      <div class="overlay-container">
-        <div class="overlay">
-          <div class="overlay-panel overlay-left">
-            <h1>Welcome Back!</h1>
-            <p>To keep connected with us please login with your personal info</p>
-            <button class="ghost" id="signIn">Sign In</button>
-          </div>
-          <div class="overlay-panel overlay-right">
-            <h1>Hello, Friend!</h1>
-            <p>Enter your personal details and start journey with us</p>
-            <button class="ghost" id="signUp">Sign Up</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="main-container">
+		<div class="container mt-5" id="container">
+			<div class="form-container sign-up-container ">
+				<div class="formulario">
+					<form>
+						<h1>Create Account</h1>
+						<span>Join us to track your sessions</span>
+						<input id="name-register" name="name-register" type="text" placeholder="Username" />
+						<input id="password-register" name="password-register" type="password" placeholder="Password" />
+					</form>
+					<button @click="getDataForm()">Sign Up</button>
+				</div>
+			</div>
+			<div class="form-container sign-in-container">
+				<div class="formulario">
+				<form>
+					<h1>Sign in</h1>
+					<span>or use your account</span>
+					<input id="name-login" key="" type="text" placeholder="Username" />
+					<input id="password-login" type="password" placeholder="Password" />
+					<button @click="checkUser()">Sign In</button>
+				</form>
+				</div>
+			</div>
+			<div class="overlay-container">
+				<div class="overlay">
+					<div class="overlay-panel overlay-left">
+						<h1>Welcome Back!</h1>
+						<p>To keep connected with us please login with your personal info</p>
+						<button class="ghost" id="signIn">Sign In</button>
+					</div>
+					<div class="overlay-panel overlay-right">
+						<h1>Hello, Friend!</h1>
+						<p>Enter your personal details and start journey with us</p>
+						<button class="ghost" id="signUp">Sign Up</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
+import axios from "axios"
+
 export default {
-   mounted(){
-const signUpButton = document.getElementById('signUp');
-const signInButton = document.getElementById('signIn');
-const container = document.getElementById('container');
 
-signUpButton.addEventListener('click', () => {
-	container.classList.add("right-panel-active");
-});
+	mounted() {
 
-signInButton.addEventListener('click', () => {
-	container.classList.remove("right-panel-active");
-});
-   }
- }
+		//funcionalidades esteticas login
+		const signUpButton = document.getElementById('signUp');
+		const signInButton = document.getElementById('signIn');
+		const container = document.getElementById('container');
+
+		signUpButton.addEventListener('click', () => {
+			container.classList.add("right-panel-active");
+		});
+
+		signInButton.addEventListener('click', () => {
+			container.classList.remove("right-panel-active");
+		});
+	},
+	methods: {
+
+		async getDataForm() {
+			let username = document.getElementById("name-register").value
+			let password = document.getElementById("password-register").value
+
+			let users = []
+
+			await axios.get("https://7qak3a37b4dh7kisebhllubdxq0dnehm.lambda-url.us-east-1.on.aws/")
+				.then((response) => {
+					users = response.data
+				})
+
+			users.forEach((user) => {
+				if (username === user.username) {
+					this.registerUser(user, password)
+				}
+			})
+
+
+		},
+
+		async registerUser(user, password) {
+			let newUser = {
+				username: user.username,
+				password: password,
+				session: user.sessions
+			}
+
+			await axios.post("http://localhost:9000/api/auth/signup", newUser)
+		},
+
+		async checkUser(){			
+			let username = document.getElementById("name-login").value
+			let password = document.getElementById("password-login").value
+
+			let logUser = {
+				username: username,
+				password: password,
+				session: []
+			}
+
+			await axios.post("http://localhost:9000/api/auth/signin",logUser)
+		}
+	}
+}
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-
-* {
-	box-sizing: border-box;
-}
-
-body {
-	background: #f6f5f7;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	font-family: 'Montserrat', sans-serif;
-	height: 100vh;
-	margin: -20px 0 50px;
-}
-
-h1 {
-	font-weight: bold;
-	margin: 0;
-}
-
-h2 {
-	text-align: center;
-}
-
-p {
-	font-size: 14px;
-	font-weight: 100;
-	line-height: 20px;
-	letter-spacing: 0.5px;
-	margin: 20px 0 30px;
-}
-
-span {
-	font-size: 12px;
-}
-
-a {
-	color: #333;
-	font-size: 14px;
-	text-decoration: none;
-	margin: 15px 0;
-}
-
-button {
-	border-radius: 20px;
-	border: 1px solid #560bad;
-	background-color: #560bad;
-	color: #FFFFFF;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 12px 45px;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	transition: transform 80ms ease-in;
-}
-
-button:active {
-	transform: scale(0.95);
-}
-
-button:focus {
-	outline: none;
-}
-
-button.ghost {
-	background-color: transparent;
-	border-color: #FFFFFF;
-}
-
-form {
-	background-color: #FFFFFF;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	padding: 0 50px;
-	height: 100%;
-	text-align: center;
-}
-
-input {
-	background-color: #eee;
-	border: none;
-	padding: 12px 15px;
-	margin: 8px 0;
+	@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+	
+		* {
+			box-sizing: border-box;
+		}
+	
+		body {
+			background: #f6f5f7;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			font-family: 'Montserrat', sans-serif;
+			height: 100vh;
+			margin: -20px 0 50px;
+		}
+	
+		h1 {
+			font-weight: bold;
+			margin: 0;
+		}
+	
+		h2 {
+			text-align: center;
+		}
+	
+		p {
+			font-size: 14px;
+			font-weight: 100;
+			line-height: 20px;
+			letter-spacing: 0.5px;
+			margin: 20px 0 30px;
+		}
+	
+		span {
+			font-size: 12px;
+		}
+	
+		a {
+			color: #333;
+			font-size: 14px;
+			text-decoration: none;
+			margin: 15px 0;
+		}
+	
+		button {
+			border-radius: 20px;
+			border: 1px solid #560bad;
+			background-color: #560bad;
+			color: #FFFFFF;
+			font-size: 12px;
+			font-weight: bold;
+			padding: 12px 45px;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			transition: transform 80ms ease-in;
+		}
+	
+		button:active {
+			transform: scale(0.95);
+		}
+	
+		button:focus {
+			outline: none;
+		}
+	
+		button.ghost {
+			background-color: transparent;
+			border-color: #FFFFFF;
+		}
+	
+		form {}
+	
+		input {
+			background-color: #eee;
+			border: none;
+			padding: 12px 15px;	margin: 8px 0;
 	width: 100%;
 }
 
@@ -216,6 +259,18 @@ input {
 .container.right-panel-active .overlay-container{
 	transform: translateX(-100%);
 }
+
+.formulario{
+	background-color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 50px;
+	height: 100%;
+	text-align: center;
+}
+
 
 .overlay {
 	background: #560bad;
