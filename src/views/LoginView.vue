@@ -6,8 +6,8 @@
 					<form>
 						<h1>Create Account</h1>
 						<span>Join us to track your sessions</span>
-						<input id="name-register" name="name-register" type="text" placeholder="Username" />
-						<input id="password-register" name="password-register" type="password" placeholder="Password" />
+						<input id="name-register" name="name-register" required type="text" placeholder="Username" />
+						<input id="password-register" name="password-register" required type="password" placeholder="Password" />
 					</form>
 					<button @click="getDataForm()">Sign Up</button>
 				</div>
@@ -17,8 +17,8 @@
 				<form>
 					<h1>Sign in</h1>
 					<span>or use your account</span>
-					<input id="name-login" key="" type="text" placeholder="Username" />
-					<input id="password-login" type="password" placeholder="Password" />
+					<input id="name-login" key="" type="text" required placeholder="Username" />
+					<input id="password-login" type="password" required placeholder="Password" />
 					<button @click="checkUser()">Sign In</button>
 				</form>
 				</div>
