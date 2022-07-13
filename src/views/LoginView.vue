@@ -81,7 +81,7 @@ export default {
 					);
 			}
 
-			await axios.get("https://7qak3a37b4dh7kisebhllubdxq0dnehm.lambda-url.us-east-1.on.aws/")
+			await axios.get("/profe",{ crossdomain: true })
 				.then((response) => {
 					users = response.data;
 				});
@@ -93,8 +93,8 @@ export default {
 					this.$refs.alert
 						.showAlert(
 							'error', // There are 4 types of alert: success, info, warning, error
-							'you cannot register this user', // Size of the icon (px)
-							'Eror', // Icon styles: now only 2 styles 'solid' and 'regular'
+							'You cannot register this user!', // Size of the icon (px)
+							'Error', // Icon styles: now only 2 styles 'solid' and 'regular'
 							'errorr', // Header of the alert
 							''  // Message of the alert								
 						);
@@ -123,7 +123,7 @@ export default {
 						.showAlert(
 							'error', // There are 4 types of alert: success, info, warning, error
 							'Error, this user is already registered', // Size of the icon (px)
-							'error', // Icon styles: now only 2 styles 'solid' and 'regular'
+							'Error', // Icon styles: now only 2 styles 'solid' and 'regular'
 							'error', // Header of the alert
 							'' + error // Message of the alert
 						)
@@ -145,8 +145,8 @@ export default {
 					.showAlert(
 						'error', // There are 4 types of alert: success, info, warning, error
 						'Please fill all fields', // Size of the icon (px)
-						'Eror', // Icon styles: now only 2 styles 'solid' and 'regular'
-						'errorr', // Header of the alert
+						'Error', // Icon styles: now only 2 styles 'solid' and 'regular'
+						'error', // Header of the alert
 						''  // Message of the alert								
 					);
 			}
@@ -166,9 +166,9 @@ export default {
 						this.$refs.alert
 							.showAlert(
 								'error', // There are 4 types of alert: success, info, warning, error
-								'Error, user not found', // Size of the icon (px)
-								'solid', // Icon styles: now only 2 styles 'solid' and 'regular'
-								'error', // Header of the alert
+								'Error, user not exist', // Size of the icon (px)
+								'404', // Icon styles: now only 2 styles 'solid' and 'regular'
+								'Error', // Header of the alert
 								'' + error // Message of the alert								
 							);
 					}
@@ -177,8 +177,8 @@ export default {
 							.showAlert(
 								'error', // There are 4 types of alert: success, info, warning, error
 								'Error, incorrect password', // Size of the icon (px)
-								'solid', // Icon styles: now only 2 styles 'solid' and 'regular'
-								'error', // Header of the alert
+								'401', // Icon styles: now only 2 styles 'solid' and 'regular'
+								'Error', // Header of the alert
 								'' + error // Message of the alert
 							);
 					}
