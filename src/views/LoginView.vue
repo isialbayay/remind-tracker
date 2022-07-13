@@ -7,21 +7,21 @@
 					<form>
 						<h1>Create Account</h1>
 						<span>Join us to track your sessions</span>
-						<input id="name-register" name="name-register" required type="text" placeholder="Username" />
-						<input id="password-register" name="password-register" required type="password" placeholder="Password" />
+						<input id="name-register" type="text" placeholder="Username" required />
+						<input id="password-register" type="password" placeholder="Password" required />
 					</form>
 					<button @click="getDataForm()">Sign Up</button>
 				</div>
 			</div>
 			<div class="form-container sign-in-container">
 				<div class="formulario">
-				<form>
-					<h1>Sign in</h1>
-					<span>or use your account</span>
-					<input id="name-login" key="" type="text" required placeholder="Username" />
-					<input id="password-login" type="password" required placeholder="Password" />
+					<form>
+						<h1>Sign in</h1>
+						<span>or use your account</span>
+						<input id="name-login" key="" type="text" placeholder="Username" required />
+						<input id="password-login" type="password" placeholder="Password" required />
+					</form>
 					<button @click="checkUser()">Sign In</button>
-				</form>
 				</div>
 			</div>
 			<div class="overlay-container">
@@ -39,160 +39,243 @@
 				</div>
 			</div>
 		</div>
+		<vue-basic-alert ref="alert" :duration="300" :closeIn="3000" />
 	</div>
 </template>
 
 <script>
 import axios from "axios"
 import SimpleNavBar from "@/components/SimpleNavBar.vue";
+import VueBasicAlert from 'vue-basic-alert';
 
 export default {
-    mounted() {
-        //funcionalidades esteticas login
-        const signUpButton = document.getElementById("signUp");
-        const signInButton = document.getElementById("signIn");
-        const container = document.getElementById("container");
-        signUpButton.addEventListener("click", () => {
-            container.classList.add("right-panel-active");
-        });
-        signInButton.addEventListener("click", () => {
-            container.classList.remove("right-panel-active");
-        });
-        if (localStorage.getItem("user_token")) {
-            this.$router.push("/sessions");
-        }
-    },
-    methods: {
-        async getDataForm() {
-            let username = document.getElementById("name-register").value;
-            let password = document.getElementById("password-register").value;
-            let users = [];
-            await axios.get("https://7qak3a37b4dh7kisebhllubdxq0dnehm.lambda-url.us-east-1.on.aws/")
-                .then((response) => {
-                users = response.data;
-            });
-            users.forEach((user) => {
-                if (username === user.username) {
-                    this.registerUser(user, password);
-                }
-            });
-        },
-        async registerUser(user, password) {
-            let newUser = {
-                username: user.username,
-                password: password,
-                session: user.sessions
-            };
-            await axios.post("http://localhost:9000/api/auth/signup", newUser);
-        },
-        async checkUser() {
-            let username = document.getElementById("name-login").value;
-            let password = document.getElementById("password-login").value;
-            let logUser = {
-                username: username,
-                password: password,
-                session: []
-            };
-            await axios.post("http://localhost:9000/api/auth/signin", logUser).then((response) => {
-                if (response.status == 200) {
-                    console.log(response.data);
-                    localStorage.setItem("user_token", response.data.accessToken);
-                    localStorage.setItem("user_id", response.data.id);
-                    this.$router.push("/sessions");
-                }
-            });
-        }
-    },
-    components: { SimpleNavBar }
+	mounted() {
+		//funcionalidades esteticas login
+		const signUpButton = document.getElementById("signUp");
+		const signInButton = document.getElementById("signIn");
+		const container = document.getElementById("container");
+		signUpButton.addEventListener("click", () => {
+			container.classList.add("right-panel-active");
+		});
+		signInButton.addEventListener("click", () => {
+			container.classList.remove("right-panel-active");
+		});
+		if (localStorage.getItem("user_token")) {
+			this.$router.push("/sessions");
+		}
+	},
+	methods: {
+		async getDataForm() {
+			let username = document.getElementById("name-register").value;
+			let password = document.getElementById("password-register").value;
+			let users = [];
+
+			if (document.getElementById("name-register").value < 1 || document.getElementById("password-register").value < 1) {
+				this.$refs.alert
+					.showAlert(
+						'error', // There are 4 types of alert: success, info, warning, error
+						'Please fill all fields', // Size of the icon (px)
+						'Eror', // Icon styles: now only 2 styles 'solid' and 'regular'
+						'errorr', // Header of the alert
+						''  // Message of the alert								
+					);
+			}
+
+			await axios.get("https://7qak3a37b4dh7kisebhllubdxq0dnehm.lambda-url.us-east-1.on.aws/")
+				.then((response) => {
+					users = response.data;
+				});
+			users.forEach((user) => {
+				if (username === user.username) {
+					this.registerUser(user, password);
+				}
+				else if(!(document.getElementById("name-register").value < 1 || document.getElementById("password-register").value < 1)){
+					this.$refs.alert
+						.showAlert(
+							'error', // There are 4 types of alert: success, info, warning, error
+							'you cannot register this user', // Size of the icon (px)
+							'Eror', // Icon styles: now only 2 styles 'solid' and 'regular'
+							'errorr', // Header of the alert
+							''  // Message of the alert								
+						);
+				}
+			});
+		},
+		async registerUser(user, password) {
+			let newUser = {
+				username: user.username,
+				password: password,
+				session: user.sessions
+			};
+			await axios.post("http://localhost:9000/api/auth/signup", newUser)
+				.then((response) => {
+					this.$refs.alert
+						.showAlert(
+							'success', // There are 4 types of alert: success, info, warning, error
+							'User registered succesfully', // Size of the icon (px)
+							'Success', // Icon styles: now only 2 styles 'solid' and 'regular'
+							'success', // Header of the alert
+							'' + response // Message of the alert								
+						);
+				})
+				.catch((error) => {
+					this.$refs.alert
+						.showAlert(
+							'error', // There are 4 types of alert: success, info, warning, error
+							'Error, this user is already registered', // Size of the icon (px)
+							'error', // Icon styles: now only 2 styles 'solid' and 'regular'
+							'error', // Header of the alert
+							'' + error // Message of the alert
+						)
+				});
+
+
+		},
+		async checkUser() {
+			let username = document.getElementById("name-login").value;
+			let password = document.getElementById("password-login").value;
+			let logUser = {
+				username: username,
+				password: password,
+				session: []
+			};
+
+			if (document.getElementById("name-login").value < 1 || document.getElementById("password-login").value < 1) {
+				this.$refs.alert
+					.showAlert(
+						'error', // There are 4 types of alert: success, info, warning, error
+						'Please fill all fields', // Size of the icon (px)
+						'Eror', // Icon styles: now only 2 styles 'solid' and 'regular'
+						'errorr', // Header of the alert
+						''  // Message of the alert								
+					);
+			}
+
+			await axios.post("http://localhost:9000/api/auth/signin", logUser).then((response) => {
+				if (response.status == 200) {
+					console.log(response.status)
+					console.log(response.data);
+					localStorage.setItem("user_token", response.data.accessToken);
+					localStorage.setItem("user_id", response.data.id);
+					this.$router.push("/sessions");
+				}
+			})
+				.catch((error) => {
+					console.log(error);
+					if (error.response.status == 404 && !(document.getElementById("name-login").value < 1 || document.getElementById("password-login").value < 1)) {
+						this.$refs.alert
+							.showAlert(
+								'error', // There are 4 types of alert: success, info, warning, error
+								'Error, user not found', // Size of the icon (px)
+								'solid', // Icon styles: now only 2 styles 'solid' and 'regular'
+								'error', // Header of the alert
+								'' + error // Message of the alert								
+							);
+					}
+					if (error.response.status == 401 && !(document.getElementById("name-login").value < 1 || document.getElementById("password-login").value < 1)) {
+						this.$refs.alert
+							.showAlert(
+								'error', // There are 4 types of alert: success, info, warning, error
+								'Error, incorrect password', // Size of the icon (px)
+								'solid', // Icon styles: now only 2 styles 'solid' and 'regular'
+								'error', // Header of the alert
+								'' + error // Message of the alert
+							);
+					}
+				});
+		}
+	},
+	components: { SimpleNavBar, VueBasicAlert }
 }
 </script>
 
 <style scoped>
-	@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-	
-		* {
-			box-sizing: border-box;
-		}
-	
-		body {
-			background: #f6f5f7;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
-			font-family: 'Montserrat', sans-serif;
-			height: 100vh;
-			margin: -20px 0 50px;
-		}
-	
-		h1 {
-			font-weight: bold;
-			margin: 0;
-		}
-	
-		h2 {
-			text-align: center;
-		}
-	
-		p {
-			font-size: 14px;
-			font-weight: 100;
-			line-height: 20px;
-			letter-spacing: 0.5px;
-			margin: 20px 0 30px;
-		}
-	
-		span {
-			font-size: 12px;
-		}
-	
-		a {
-			color: #333;
-			font-size: 14px;
-			text-decoration: none;
-			margin: 15px 0;
-		}
-	
-		button {
-			border-radius: 20px;
-			border: 1px solid #560bad;
-			background-color: #560bad;
-			color: #FFFFFF;
-			font-size: 12px;
-			font-weight: bold;
-			padding: 12px 45px;
-			letter-spacing: 1px;
-			text-transform: uppercase;
-			transition: transform 80ms ease-in;
-		}
-	
-		button:active {
-			transform: scale(0.95);
-		}
-	
-		button:focus {
-			outline: none;
-		}
-	
-		button.ghost {
-			background-color: transparent;
-			border-color: #FFFFFF;
-		}
-	
-		form {}
-	
-		input {
-			background-color: #eee;
-			border: none;
-			padding: 12px 15px;	margin: 8px 0;
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background: #f6f5f7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-family: 'Montserrat', sans-serif;
+	height: 100vh;
+	margin: -20px 0 50px;
+}
+
+h1 {
+	font-weight: bold;
+	margin: 0;
+}
+
+h2 {
+	text-align: center;
+}
+
+p {
+	font-size: 14px;
+	font-weight: 100;
+	line-height: 20px;
+	letter-spacing: 0.5px;
+	margin: 20px 0 30px;
+}
+
+span {
+	font-size: 12px;
+}
+
+a {
+	color: #333;
+	font-size: 14px;
+	text-decoration: none;
+	margin: 15px 0;
+}
+
+button {
+	border-radius: 20px;
+	border: 1px solid #560bad;
+	background-color: #560bad;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+}
+
+button:active {
+	transform: scale(0.95);
+}
+
+button:focus {
+	outline: none;
+}
+
+button.ghost {
+	background-color: transparent;
+	border-color: #FFFFFF;
+}
+
+form {}
+
+input {
+	background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
 	width: 100%;
 }
 
 .container {
 	background-color: #fff;
 	border-radius: 10px;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
-	0 10px 10px rgba(0,0,0,0.22);
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+		0 10px 10px rgba(0, 0, 0, 0.22);
 	position: relative;
 	overflow: hidden;
 	width: 768px;
@@ -232,12 +315,15 @@ export default {
 }
 
 @keyframes show {
-	0%, 49.99% {
+
+	0%,
+	49.99% {
 		opacity: 0;
 		z-index: 1;
 	}
-	
-	50%, 100% {
+
+	50%,
+	100% {
 		opacity: 1;
 		z-index: 5;
 	}
@@ -254,11 +340,11 @@ export default {
 	z-index: 100;
 }
 
-.container.right-panel-active .overlay-container{
+.container.right-panel-active .overlay-container {
 	transform: translateX(-100%);
 }
 
-.formulario{
+.formulario {
 	background-color: #FFFFFF;
 	display: flex;
 	align-items: center;
@@ -282,12 +368,12 @@ export default {
 	left: -100%;
 	height: 100%;
 	width: 200%;
-  transform: translateX(0);
+	transform: translateX(0);
 	transition: transform 0.6s ease-in-out;
 }
 
 .container.right-panel-active .overlay {
-  transform: translateX(50%);
+	transform: translateX(50%);
 }
 
 .overlay-panel {
