@@ -1,11 +1,12 @@
 <template>
+  <NavBar></NavBar>
   <div class="main-container">
     <h2>Sessions</h2>
     <p>Welcome {{ user.username }}</p>
     <div class="sessions d-flex">
-      <div v-for="session in user.sessions" :key="session.id" class="card">
-        <div class="card-img" :class="{orange: session.id%2,}">
-          <p class="text-title">Session #{{session.id}}</p>
+      <div v-for="(session,index) in user.session" :key="session.id" :item="session" :index="index" class="card">
+        <div class="card-img" :class="{orange: index%2,}">
+          <p class="text-title">Session #{{index+1}}</p>
           </div>
         <div class="card-info">
           <p>{{session.date}}</p>
@@ -27,28 +28,33 @@
 
 <script>
 import { mapState } from "vuex";
-//import axios from 'axios';
+import axios from 'axios';
+import NavBar from "@/components/NavBar.vue";
 
 export default {
-  async mounted(){
-     
-
-
-  },
-  methods:{
-    
-    
-    //getUserData(){
-    //  await axios.get("https://7qak3a37b4dh7kisebhllubdxq0dnehm.lambda-url.us-east-1.on.aws/")
-    //    .then((response) => {
-
-    //    })
-    //}
-
-  },
-  computed: {
-    ...mapState(["user"]),
-  },
+    data() {
+        return {
+            userId: "",
+            user: "",
+        };
+    },
+    async mounted() {
+        if (localStorage.getItem("user_token")) {
+            console.log("logeado pa");
+            this.userId = localStorage.getItem("user_id");
+            await axios.get("http://localhost:9000/api/users/" + this.userId).then((response) => {
+                this.user = response.data;
+            });
+        }
+        else {
+            this.$router.push("/login");
+        }
+    },
+    methods: {},
+    computed: {
+        ...mapState(["user"]),
+    },
+    components: { NavBar }
 };
 </script>
 

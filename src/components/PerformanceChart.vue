@@ -7,12 +7,15 @@
 
 <script>
 import Chart from "chart.js";
-import { mapState } from "vuex";
+import axios from "axios"
+// import { mapState } from "vuex";
 
 export default {
   name: "PerformanceChart",
   data() {
     return {
+      userId:"",
+      user:"",
       performanceChartData: {
         type: "line",
         data: {
@@ -45,11 +48,21 @@ export default {
     };
   },
   computed:{
-    ...mapState(['user'])
+    // ...mapState(['user'])
   },
-    mounted() {
-      this.performanceChartData.data.labels = this.user.sessions.map(({ id }) => "Session #"+id);
-      this.performanceChartData.data.datasets[0].data = this.user.sessions.map(({ score }) => score);
+    async mounted() {
+          if(localStorage.getItem("user_token")){
+      console.log("logeado pa")
+      this.userId = localStorage.getItem("user_id")
+      await axios.get("http://localhost:9000/api/users/"+this.userId).then((response)=> {
+        this.user = response.data
+      })
+    }else{
+      this.$router.push("/login")
+    }
+
+      this.performanceChartData.data.labels = this.user.session.map((response) => "Session #"+(this.user.session.indexOf(response)+1));
+      this.performanceChartData.data.datasets[0].data = this.user.session.map(({ score }) => score);
 
       const ctx = document.getElementById("performance-chart");
       new Chart(ctx, this.performanceChartData);

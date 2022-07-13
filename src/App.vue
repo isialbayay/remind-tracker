@@ -1,22 +1,19 @@
 <template>
-  <SimpleNavBar></SimpleNavBar>
-  <router-view/>
+  <!-- <SimpleNavBar v-if="!logged"></SimpleNavBar> -->
+  <!-- <NavBar></NavBar> -->
+  <router-view />
 </template>
 
 <script>
-//import NavBar from './components/NavBar.vue'
-import SimpleNavBar from './components/SimpleNavBar.vue'
-
 export default{
   components:{
-    //NavBar
-    SimpleNavBar
-}
+
+  },
 }
 </script>
 
 <style>
-.main-container{
+.main-container {
   background-color: #d6dada;
   min-height: calc(100vh - 56px);
   padding: 12px;

@@ -1,4 +1,5 @@
 <template>
+	<SimpleNavBar></SimpleNavBar>
 	<div class="main-container">
 		<div class="container mt-5" id="container">
 			<div class="form-container sign-up-container ">
@@ -43,69 +44,66 @@
 
 <script>
 import axios from "axios"
+import SimpleNavBar from "@/components/SimpleNavBar.vue";
 
 export default {
-
-	mounted() {
-
-		//funcionalidades esteticas login
-		const signUpButton = document.getElementById('signUp');
-		const signInButton = document.getElementById('signIn');
-		const container = document.getElementById('container');
-
-		signUpButton.addEventListener('click', () => {
-			container.classList.add("right-panel-active");
-		});
-
-		signInButton.addEventListener('click', () => {
-			container.classList.remove("right-panel-active");
-		});
-	},
-	methods: {
-
-		async getDataForm() {
-			let username = document.getElementById("name-register").value
-			let password = document.getElementById("password-register").value
-
-			let users = []
-
-			await axios.get("https://7qak3a37b4dh7kisebhllubdxq0dnehm.lambda-url.us-east-1.on.aws/")
-				.then((response) => {
-					users = response.data
-				})
-
-			users.forEach((user) => {
-				if (username === user.username) {
-					this.registerUser(user, password)
-				}
-			})
-
-
-		},
-
-		async registerUser(user, password) {
-			let newUser = {
-				username: user.username,
-				password: password,
-				session: user.sessions
-			}
-
-			await axios.post("http://localhost:9000/api/auth/signup", newUser)
-		},
-
-		async checkUser(){			
-			let username = document.getElementById("name-login").value
-			let password = document.getElementById("password-login").value
-
-			let logUser = {
-				username: username,
-				password: password,
-				session: []
-			}
-
-			await axios.post("http://localhost:9000/api/auth/signin",logUser)
-		}
-	}
+    mounted() {
+        //funcionalidades esteticas login
+        const signUpButton = document.getElementById("signUp");
+        const signInButton = document.getElementById("signIn");
+        const container = document.getElementById("container");
+        signUpButton.addEventListener("click", () => {
+            container.classList.add("right-panel-active");
+        });
+        signInButton.addEventListener("click", () => {
+            container.classList.remove("right-panel-active");
+        });
+        if (localStorage.getItem("user_token")) {
+            this.$router.push("/sessions");
+        }
+    },
+    methods: {
+        async getDataForm() {
+            let username = document.getElementById("name-register").value;
+            let password = document.getElementById("password-register").value;
+            let users = [];
+            await axios.get("https://7qak3a37b4dh7kisebhllubdxq0dnehm.lambda-url.us-east-1.on.aws/")
+                .then((response) => {
+                users = response.data;
+            });
+            users.forEach((user) => {
+                if (username === user.username) {
+                    this.registerUser(user, password);
+                }
+            });
+        },
+        async registerUser(user, password) {
+            let newUser = {
+                username: user.username,
+                password: password,
+                session: user.sessions
+            };
+            await axios.post("http://localhost:9000/api/auth/signup", newUser);
+        },
+        async checkUser() {
+            let username = document.getElementById("name-login").value;
+            let password = document.getElementById("password-login").value;
+            let logUser = {
+                username: username,
+                password: password,
+                session: []
+            };
+            await axios.post("http://localhost:9000/api/auth/signin", logUser).then((response) => {
+                if (response.status == 200) {
+                    console.log(response.data);
+                    localStorage.setItem("user_token", response.data.accessToken);
+                    localStorage.setItem("user_id", response.data.id);
+                    this.$router.push("/sessions");
+                }
+            });
+        }
+    },
+    components: { SimpleNavBar }
 }
 </script>
 
