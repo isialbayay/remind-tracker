@@ -47,9 +47,11 @@
 import axios from "axios"
 import SimpleNavBar from "@/components/SimpleNavBar.vue";
 import VueBasicAlert from 'vue-basic-alert';
+import { mapState } from "vuex";
 
 export default {
 	mounted() {
+		console.log("LOG "+this.isLogin)
 		//funcionalidades esteticas login
 		const signUpButton = document.getElementById("signUp");
 		const signInButton = document.getElementById("signIn");
@@ -63,6 +65,14 @@ export default {
 		if (localStorage.getItem("user_token")) {
 			this.$router.push("/sessions");
 		}
+
+		if(this.isLogin === 1){
+			container.classList.add("right-panel-active");
+		}
+
+	},
+	computed:{
+		...mapState(["isLogin"])
 	},
 	methods: {
 		async getDataForm() {
@@ -73,11 +83,10 @@ export default {
 			if (document.getElementById("name-register").value < 1 || document.getElementById("password-register").value < 1) {
 				this.$refs.alert
 					.showAlert(
-						'error', // There are 4 types of alert: success, info, warning, error
-						'Please fill all fields', // Size of the icon (px)
-						'Eror', // Icon styles: now only 2 styles 'solid' and 'regular'
-						'errorr', // Header of the alert
-						''  // Message of the alert								
+						'error', 
+						'Please fill all fields', 
+						'Error', 
+						'error', 							
 					);
 			}
 
@@ -92,11 +101,11 @@ export default {
 				else if(!(document.getElementById("name-register").value < 1 || document.getElementById("password-register").value < 1)){
 					this.$refs.alert
 						.showAlert(
-							'error', // There are 4 types of alert: success, info, warning, error
-							'You cannot register this user!', // Size of the icon (px)
-							'Error', // Icon styles: now only 2 styles 'solid' and 'regular'
-							'errorr', // Header of the alert
-							''  // Message of the alert								
+							'error', 
+							'You cannot register this user!',
+							'Error', 
+							'error', 
+							''  							
 						);
 				}
 			});
@@ -111,21 +120,21 @@ export default {
 				.then((response) => {
 					this.$refs.alert
 						.showAlert(
-							'success', // There are 4 types of alert: success, info, warning, error
-							'User registered succesfully', // Size of the icon (px)
-							'Success', // Icon styles: now only 2 styles 'solid' and 'regular'
-							'success', // Header of the alert
-							'' + response // Message of the alert								
+							'success', 
+							'User registered succesfully', 
+							'Success', 
+							'success', 
+							'' + response								
 						);
 				})
 				.catch((error) => {
 					this.$refs.alert
 						.showAlert(
-							'error', // There are 4 types of alert: success, info, warning, error
-							'Error, this user is already registered', // Size of the icon (px)
-							'Error', // Icon styles: now only 2 styles 'solid' and 'regular'
-							'error', // Header of the alert
-							'' + error // Message of the alert
+							'error',
+							'Error, this user is already registered', 
+							'Error', 
+							'error', 
+							'' + error 
 						)
 				});
 
@@ -143,11 +152,11 @@ export default {
 			if (document.getElementById("name-login").value < 1 || document.getElementById("password-login").value < 1) {
 				this.$refs.alert
 					.showAlert(
-						'error', // There are 4 types of alert: success, info, warning, error
-						'Please fill all fields', // Size of the icon (px)
-						'Error', // Icon styles: now only 2 styles 'solid' and 'regular'
-						'error', // Header of the alert
-						''  // Message of the alert								
+						'error',
+						'Please fill all fields',
+						'Error',
+						'error', 
+						''  								
 					);
 			}
 
@@ -165,21 +174,21 @@ export default {
 					if (error.response.status == 404 && !(document.getElementById("name-login").value < 1 || document.getElementById("password-login").value < 1)) {
 						this.$refs.alert
 							.showAlert(
-								'error', // There are 4 types of alert: success, info, warning, error
-								'Error, user not exist', // Size of the icon (px)
-								'404', // Icon styles: now only 2 styles 'solid' and 'regular'
-								'Error', // Header of the alert
-								'' + error // Message of the alert								
+								'error', 
+								'Error, incorrect user or password', 
+								'Error: 404', 
+								'Error', 
+								'' + error 								
 							);
 					}
 					if (error.response.status == 401 && !(document.getElementById("name-login").value < 1 || document.getElementById("password-login").value < 1)) {
 						this.$refs.alert
 							.showAlert(
-								'error', // There are 4 types of alert: success, info, warning, error
-								'Error, incorrect password', // Size of the icon (px)
-								'401', // Icon styles: now only 2 styles 'solid' and 'regular'
-								'Error', // Header of the alert
-								'' + error // Message of the alert
+								'error', 
+								'Error, incorrect user or password',
+								'Error: 401', 
+								'Error',
+								'' + error 
 							);
 					}
 				});

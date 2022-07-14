@@ -10,8 +10,8 @@
           Join us to discover the opportunities that RemindTracker has for you
         </p>
         <div class="buttons flex-wrap">
-          <router-link class="button" to="/login">Log in</router-link>
-          <router-link class="button" to="/login">Register</router-link>
+          <router-link class="button" to="/login" @click="changeIsLogin(0)">Log in</router-link>
+          <router-link class="button" to="/login" @click="changeIsLogin(1)">Register</router-link>
         </div>
       </div>
       <div>
@@ -23,6 +23,8 @@
 
 <script>
 import SimpleNavBar from '@/components/SimpleNavBar.vue';
+import { mapState, mapMutations } from 'vuex';
+
 export default {
   components:{
     SimpleNavBar
@@ -32,6 +34,12 @@ export default {
       this.$router.push("/sessions")
     }
   },
+  computed:{
+    ...mapState(["isLogin"])
+  },
+  methods:{
+     ...mapMutations(['changeIsLogin']),
+  }
 };
 </script>
 
